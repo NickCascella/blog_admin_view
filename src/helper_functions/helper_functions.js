@@ -37,4 +37,4 @@ const get_blogs = async (token, setBlogs) => {
   setBlogs(response.data);
 };
 
-export { get_blogs, logout, changeInputValue };
+export { get_blogs, logout, changeInputValue, create_timestamp };

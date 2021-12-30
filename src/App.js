@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Redirect from "./components/redirect";
 import Login_page from "./pages/login";
 import Blogs_page from "./pages/blogs";
+import Blog_page from "./pages/blog";
 
 const UserContext = React.createContext();
 
@@ -51,6 +52,7 @@ function App() {
             ></Route>
             <Route path="/login" element={<Login_page />}></Route>
             <Route path="/blogs" element={<Blogs_page />}></Route>
+            <Route path="/blogs/:id" element={<Blog_page />}></Route>
           </Routes>
         </div>
       </UserContext.Provider>

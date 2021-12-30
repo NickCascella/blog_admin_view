@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../App";
 import Redirect from "../components/redirect";
-// import Loading_page from "../components/loading";
+import Loading_page from "./loading";
 import { Link } from "react-router-dom";
 import { get_blogs } from "../helper_functions/helper_functions";
 
@@ -31,8 +31,7 @@ const Blogs_page = () => {
   if (!token) {
     return <Redirect route={"/login"} />;
   } else if (!blogs) {
-    return <div>Nothing here</div>;
-    // return <Loading_page message="No blogs yet :/" />;
+    return <Loading_page message="No blogs yet :/" />;
   }
 
   return (
