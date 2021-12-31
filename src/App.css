@@ -1,3 +1,7 @@
+html {
+  overflow-x: hidden;
+}
+
 html * {
   margin: 0;
   padding: 0;
@@ -27,8 +31,9 @@ html * {
   border: none;
   border-radius: 3px;
   max-width: 200px;
-  padding: 2x;
+  padding: 3px;
   font-size: 16px;
+  outline: none;
 }
 
 .label-component {
@@ -61,9 +66,60 @@ html * {
       -ms-flex-direction: column;
           flex-direction: column;
   color: white;
-  padding: 10px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.App nav {
+  width: 100%;
+  background-color: #528ba5;
+}
+
+.App nav .inner-nav {
+  max-width: 700px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-left: auto;
+  width: 100%;
+}
+
+.App nav .inner-nav .nav-link {
+  color: white;
+  text-decoration: none;
+  margin: 10px 15px;
+  font-size: 20px;
+  display: inline-block;
+  position: relative;
+}
+
+.App nav .inner-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  height: 2px;
+  margin-top: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+  -webkit-transition: -webkit-transform 0.25s ease-out;
+  transition: -webkit-transform 0.25s ease-out;
+  transition: transform 0.25s ease-out;
+  transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
+}
+
+.App nav .inner-nav .nav-link:hover::after {
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
 }
 
 .App .login-page {
@@ -79,7 +135,6 @@ html * {
           flex-direction: column;
   padding: 25px;
   border-radius: 7px;
-  overflow-y: auto;
 }
 
 .App .login-page * {
@@ -114,21 +169,72 @@ html * {
   margin-top: 25px;
 }
 
-.App nav {
-  width: 100%;
-  background-color: orange;
-}
-
-.App nav .inner-nav {
-  max-width: 700px;
+.App .blogs-page {
+  max-width: 1400px;
+  margin-top: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  margin-left: auto;
-  background-color: yellow;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
+}
+
+.App .blogs-page .blogs-list {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.App .blogs-page .blogs-list .blog-preview {
+  margin: 20px 30px;
+  background: #528ba5;
+  padding: 15px;
+  border-radius: 10px;
+  max-width: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.App .blogs-page .blogs-list .blog-preview:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.App .blogs-page .blogs-list .blog-preview .blog-link {
+  text-decoration: none;
+  color: white;
+}
+
+.App .blogs-page .blogs-list .blog-preview .blog-title {
+  margin-bottom: 20px;
+}
+
+.App .blogs-page .blogs-list .blog-preview .blog-author-container .blog-author-name {
+  font-style: italic;
+}
+
+.App .blogs-page .blogs-list .blog-preview .blog-description {
   margin-top: 20px;
 }
 /*# sourceMappingURL=App.css.map */

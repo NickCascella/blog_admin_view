@@ -8,6 +8,7 @@ html {
     margin: 0;
     padding: 0;
   }
+  overflow-x: hidden;
 }
 
 .button-component {
@@ -30,8 +31,9 @@ html {
   border: none;
   border-radius: 3px;
   max-width: 200px;
-  padding: 2x;
+  padding: 3px;
   font-size: 16px;
+  outline: none;
 }
 
 .label-component {
@@ -56,8 +58,47 @@ html {
   align-items: center;
   flex-direction: column;
   color: $font-primary;
-  padding: 10px;
   box-sizing: border-box;
+  //   padding: 10px;
+  overflow-y: auto;
+  nav {
+    width: 100%;
+    background-color: $background-secondary;
+    .inner-nav {
+      max-width: 700px;
+      display: flex;
+      justify-content: space-around;
+      margin-left: auto;
+      width: 100%;
+
+      .nav-link {
+        color: $font-primary;
+        text-decoration: none;
+        margin: 10px 15px;
+        font-size: 20px;
+        display: inline-block;
+        position: relative;
+        &::after {
+          content: "";
+          position: absolute;
+          width: 100%;
+          transform: scaleX(0);
+          height: 2px;
+          margin-top: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: $font-primary;
+          transform-origin: bottom right;
+          transition: transform 0.25s ease-out;
+        }
+        &:hover::after {
+          transform: scaleX(1);
+          transform-origin: bottom left;
+        }
+      }
+    }
+  }
+
   .login-page {
     margin: auto;
     background-color: $background-secondary;
@@ -66,7 +107,6 @@ html {
     flex-direction: column;
     padding: 25px;
     border-radius: 7px;
-    overflow-y: auto;
 
     * {
       margin-top: 10px;
@@ -90,17 +130,47 @@ html {
       }
     }
   }
-  nav {
+  .blogs-page {
+    max-width: 1400px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    background-color: orange;
-    .inner-nav {
-      max-width: 700px;
-      display: flex;
-      justify-content: space-around;
-      margin-left: auto;
-      background-color: yellow;
+    .blogs-list {
       width: 100%;
-      margin-top: 20px;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      .blog-preview {
+        margin: 20px 30px;
+        background: $background-secondary;
+        padding: 15px;
+        border-radius: 10px;
+        max-width: 200px;
+        display: flex;
+        align-items: center;
+        height: max-content;
+        transition: 0.5s;
+        &:hover {
+          transform: scale(1.1);
+        }
+        .blog-link {
+          text-decoration: none;
+          color: $font-primary;
+        }
+        .blog-title {
+          margin-bottom: 20px;
+        }
+        .blog-author-container {
+          .blog-author-name {
+            font-style: italic;
+          }
+        }
+        .blog-description {
+          margin-top: 20px;
+        }
+      }
     }
   }
 }

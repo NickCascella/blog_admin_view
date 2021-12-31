@@ -91,17 +91,23 @@ const Blog_edit_page = () => {
           <div>{blog.edited_date} </div>
         </div>
       )}
-      <Button
-        text={
-          <div>
-            {!editing && <div>Edit</div>}
-            {editing && <div>Cancel</div>}
-          </div>
-        }
-        on_click={() => {
-          setEditing(!editing);
-        }}
-      />
+      {blog.author.username === user_context.user && (
+        <Button
+          text={
+            <div>
+              {!editing && <div>Edit</div>}
+              {editing && <div>Cancel</div>}
+            </div>
+          }
+          on_click={() => {
+            setEditing(!editing);
+          }}
+        />
+      )}
+      {blog.author.username !== user_context.user && (
+        <div>This blog is only editable by its author {user_context.user}</div>
+      )}
+
       {editing && (
         <div>
           <Input

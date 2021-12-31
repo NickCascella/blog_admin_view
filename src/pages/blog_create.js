@@ -35,6 +35,7 @@ const Blog_create_page = () => {
         blog_body: blogBody,
         blog_published: blogPublished,
         created_date: date,
+        author: user_context.userId,
       },
     };
     console.log(options);

@@ -18,12 +18,19 @@ const Blogs_page = () => {
   }, []);
 
   const render_blogs = () => {
+    console.log(blogs);
     return blogs.map((blog) => {
       return (
-        <div key={blog._id}>
-          <Link to={`/blogs/${blog._id}`}>
-            <h1>{blog.title}</h1>
-            <h2>{blog.description}</h2>
+        <div className="blog-preview" key={blog._id}>
+          <Link className="blog-link" to={`/blogs/${blog._id}`}>
+            <h1 className="blog-title">{blog.title}</h1>
+            <h2 className="blog-author-container">
+              By{" "}
+              <span className="blog-author-name">
+                {blog.author && blog.author.username}
+              </span>
+            </h2>
+            <p className="blog-description">{blog.description}</p>
           </Link>
         </div>
       );
@@ -37,12 +44,14 @@ const Blogs_page = () => {
   }
 
   return (
-    <div>
-      <div>Welcome to blogs</div>
-      <Link to={"/blogs/create"}>
+    <div className="blogs-page">
+      <h1>List of Blogs</h1>
+      <div className="blogs-list">
+        {/* <Link to={"/blogs/create"}>
         <Button text={"Create blog +"} />
-      </Link>
-      {render_blogs()}
+      </Link> */}
+        {render_blogs()}
+      </div>
     </div>
   );
 };

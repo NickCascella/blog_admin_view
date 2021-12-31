@@ -40,9 +40,19 @@ function App() {
                 ></Custom_Link>
 
                 <Custom_Link text={"Blogs"} route={"/blogs"}></Custom_Link>
+                <Custom_Link
+                  text={"Logout"}
+                  route={"/login"}
+                  on_click={() => {
+                    setToken(null);
+                    setUser(null);
+                    setUserId(null);
+                  }}
+                ></Custom_Link>
               </div>
             </nav>
           )}
+
           <Routes>
             <Route
               exact
