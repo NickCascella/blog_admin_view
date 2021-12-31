@@ -6,6 +6,8 @@ import Redirect from "./components/redirect";
 import Login_page from "./pages/login";
 import Blogs_page from "./pages/blogs";
 import Blog_edit_page from "./pages/blog_edit";
+import Blog_create_page from "./pages/blog_create";
+import Custom_Link from "./components/link";
 
 const UserContext = React.createContext();
 
@@ -44,6 +46,9 @@ function App() {
               Learn React
             </a>
           </header>
+          <div>
+            <Custom_Link text={"Create"} route={"/blogs/create"}></Custom_Link>
+          </div>
           <Routes>
             <Route
               exact
@@ -53,6 +58,7 @@ function App() {
             <Route path="/login" element={<Login_page />}></Route>
             <Route path="/blogs" element={<Blogs_page />}></Route>
             <Route path="/blogs/:id" element={<Blog_edit_page />}></Route>
+            <Route path="/blogs/create" element={<Blog_create_page />}></Route>
           </Routes>
         </div>
       </UserContext.Provider>

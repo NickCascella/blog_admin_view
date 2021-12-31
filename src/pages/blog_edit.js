@@ -9,6 +9,8 @@ import Redirect from "../components/redirect";
 import {
   changeInputValue,
   create_timestamp,
+  get_blog,
+  delete_blog,
 } from "../helper_functions/helper_functions";
 
 const Blog_edit_page = () => {
@@ -25,27 +27,8 @@ const Blog_edit_page = () => {
   const [deleted, setDeleted] = useState(false);
 
   useEffect(async () => {
-    console.log(user_context);
-    get_blog();
+    get_blog(token, id, setBlog, setBlogPublished);
   }, [editing]);
-
-  const get_blog = async () => {
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      mode: "cors",
-    };
-    const get_blog = await axios.get(
-      `http://localhost:4000/blogs/${id}`,
-      options
-    );
-    const response = get_blog;
-    setBlog(response.data);
-    setBlogPublished(response.data.published);
-  };
 
   const edit_blog = (blog) => {
     setBlogTitle(blog.title);
@@ -92,28 +75,6 @@ const Blog_edit_page = () => {
     return blogPublished ? true : false;
   };
 
-  const delete_blog = async () => {
-    const options = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      data: {
-        blog_id: id,
-      },
-    };
-    setDeleted(true);
-    const delete_blog_request = await axios.delete(
-      `http://localhost:4000/blogs/admin/${id}`,
-      options
-    );
-
-    // const error_array = submit_edits.data.errors;
-    // if (error_array) {
-    //   return error_array;
-    // }
-  };
-
   if (deleted) {
     return <Redirect route={"/blogs"} />;
   } else if (!token) {
@@ -141,56 +102,54 @@ const Blog_edit_page = () => {
       />
       {editing && (
         <div>
-          <form>
-            <Input
-              type={"text"}
-              on_change={(e) => {
-                changeInputValue(e.target.value, setBlogTitle);
-              }}
-              value={blogTitle}
-            />
-            <Input
-              type={"text"}
-              value={blogTitle}
-              on_change={(e) => {
-                changeInputValue(e.target.value, setBlogBody);
-              }}
-              value={blogBody}
-            />
-            <Input
-              type={"text"}
-              on_change={(e) => {
-                changeInputValue(e.target.value, setBlogDescription);
-              }}
-              value={blogDescription}
-            />
-            <Button
-              text={"Submit changes"}
-              on_click={(e) => {
-                e.preventDefault();
-                submit_edits();
-              }}
-            />
-            <Button
-              text={
-                <div>
-                  {!check_published() && <div>Publish</div>}
-                  {check_published() && <div>Unpublish</div>}
-                </div>
-              }
-              on_click={(e) => {
-                e.preventDefault();
-                setBlogPublished(!blogPublished);
-              }}
-            />
-            <Button
-              text={"Delete"}
-              on_click={async () => {
-                await delete_blog();
-                setEditing(!editing);
-              }}
-            />
-          </form>
+          <Input
+            type={"text"}
+            on_change={(e) => {
+              changeInputValue(e.target.value, setBlogTitle);
+            }}
+            value={blogTitle}
+          />
+          <Input
+            type={"text"}
+            value={blogTitle}
+            on_change={(e) => {
+              changeInputValue(e.target.value, setBlogBody);
+            }}
+            value={blogBody}
+          />
+          <Input
+            type={"text"}
+            on_change={(e) => {
+              changeInputValue(e.target.value, setBlogDescription);
+            }}
+            value={blogDescription}
+          />
+          <Button
+            text={"Submit changes"}
+            on_click={(e) => {
+              e.preventDefault();
+              submit_edits();
+            }}
+          />
+          <Button
+            text={
+              <div>
+                {!check_published() && <div>Publish</div>}
+                {check_published() && <div>Unpublish</div>}
+              </div>
+            }
+            on_click={(e) => {
+              e.preventDefault();
+              setBlogPublished(!blogPublished);
+            }}
+          />
+          <Button
+            text={"Delete"}
+            on_click={async () => {
+              await delete_blog(token, id, setDeleted);
+              setEditing(!editing);
+            }}
+          />
         </div>
       )}
 

@@ -37,4 +37,51 @@ const get_blogs = async (token, setBlogs) => {
   setBlogs(response.data);
 };
 
-export { get_blogs, logout, changeInputValue, create_timestamp };
+const get_blog = async (token, id, setBlog, setBlogPublished) => {
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    mode: "cors",
+  };
+  const get_blog_request = await axios.get(
+    `http://localhost:4000/blogs/${id}`,
+    options
+  );
+  const response = get_blog_request;
+  setBlog(response.data);
+  setBlogPublished(response.data.published);
+};
+
+const delete_blog = async (token, id, setDeleted) => {
+  const options = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      blog_id: id,
+    },
+  };
+  setDeleted(true);
+  const delete_blog_request = await axios.delete(
+    `http://localhost:4000/blogs/admin/${id}`,
+    options
+  );
+
+  // const error_array = submit_edits.data.errors;
+  // if (error_array) {
+  //   return error_array;
+  // }
+};
+
+export {
+  get_blogs,
+  logout,
+  changeInputValue,
+  create_timestamp,
+  get_blog,
+  delete_blog,
+};
