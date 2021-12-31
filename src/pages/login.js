@@ -1,13 +1,20 @@
 import axios from "axios";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../App";
 import Redirect from "../components/redirect";
+import Label from "../components/label";
+import Input from "../components/input";
+import Button from "../components/button";
+import { render_errors } from "../helper_functions/helper_functions";
 
 const Login_page = () => {
   const [loginUser, setLoginUser] = useState();
   const [password, setPassword] = useState();
   const [adminCode, setAdminCode] = useState();
   const user_context = useContext(UserContext);
+  const [errorResponse, setErrorResponse] = useState(null);
+
+  useEffect(() => {}, [errorResponse]);
 
   const login = async () => {
     const options = {
@@ -26,10 +33,16 @@ const Login_page = () => {
       "http://localhost:4000/auth/admin/login",
       options
     );
-    console.log(get_token, "k");
-    // setLoginUser("");
-    // setPassword("");
-    // setAdminCode("");
+
+    setLoginUser("");
+    setPassword("");
+    setAdminCode("");
+    console.log(get_token);
+    if (get_token.data.errors) {
+      setErrorResponse(get_token.data.errors);
+      return;
+    }
+    setErrorResponse(null);
     user_context.setUser(get_token.data.user);
     user_context.setUserId(get_token.data.userId);
     user_context.setToken(get_token.data.token);
@@ -39,35 +52,41 @@ const Login_page = () => {
     return <Redirect route={"/blogs"} />;
   }
   return (
-    <div>
+    <div className="login-page">
+      <h1>Admin Blog Portal</h1>
+      <h2>Create and edit all blogs viewed by yourself and standard users</h2>
       <form>
-        <input
+        <Label label={"Username"}></Label>
+        <Input
           type={"text"}
-          onChange={(e) => {
+          on_change={(e) => {
             setLoginUser(e.target.value);
           }}
         />
-        <input
+        <Label label={"Password"}></Label>
+        <Input
           type={"password"}
-          onChange={(e) => {
+          on_change={(e) => {
             setPassword(e.target.value);
           }}
         />
-        <input
+
+        <Label label={"Admin Code"}></Label>
+        <Input
           type={"password"}
-          onChange={(e) => {
+          on_change={(e) => {
             setAdminCode(e.target.value);
           }}
         />
-        <button
-          onClick={(e) => {
+        <Button
+          text={"Login"}
+          on_click={(e) => {
             e.preventDefault();
             login();
           }}
-        >
-          Login
-        </button>
+        />
       </form>
+      {errorResponse && render_errors(errorResponse)}
     </div>
   );
 };

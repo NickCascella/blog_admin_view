@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -32,23 +31,18 @@ function App() {
         }}
       >
         <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
-          </header>
-          <div>
-            <Custom_Link text={"Create"} route={"/blogs/create"}></Custom_Link>
-          </div>
+          {token && (
+            <nav>
+              <div className="inner-nav">
+                <Custom_Link
+                  text={"Create"}
+                  route={"/blogs/create"}
+                ></Custom_Link>
+
+                <Custom_Link text={"Blogs"} route={"/blogs"}></Custom_Link>
+              </div>
+            </nav>
+          )}
           <Routes>
             <Route
               exact

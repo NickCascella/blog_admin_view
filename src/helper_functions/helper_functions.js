@@ -77,6 +77,21 @@ const delete_blog = async (token, id, setDeleted) => {
   // }
 };
 
+const render_errors = (error_array) => {
+  return (
+    <div className="rendered-errors">
+      <div className="rendered-error-header">
+        Please note the following issues with your request
+      </div>
+      <ul className="rendered-errors-list">
+        {error_array.map((error) => {
+          return <li className="rendered-error-message">{error.msg}</li>;
+        })}
+      </ul>
+    </div>
+  );
+};
+
 export {
   get_blogs,
   logout,
@@ -84,4 +99,5 @@ export {
   create_timestamp,
   get_blog,
   delete_blog,
+  render_errors,
 };

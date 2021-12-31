@@ -11,6 +11,7 @@ import {
   create_timestamp,
   get_blog,
   delete_blog,
+  check_published,
 } from "../helper_functions/helper_functions";
 
 const Blog_edit_page = () => {
@@ -27,14 +28,11 @@ const Blog_edit_page = () => {
   const [deleted, setDeleted] = useState(false);
 
   useEffect(async () => {
-    get_blog(token, id, setBlog, setBlogPublished);
-  }, [editing]);
-
-  const edit_blog = (blog) => {
     setBlogTitle(blog.title);
     setBlogBody(blog.body);
     setBlogDescription(blog.description);
-  };
+    get_blog(token, id, setBlog, setBlogPublished);
+  }, [editing]);
 
   const submit_edits = async () => {
     const headers = {
@@ -58,7 +56,7 @@ const Blog_edit_page = () => {
         blog_published: blogPublished,
       },
     };
-
+    console.log(blogPublished);
     const submit_edits = await axios.put(
       `http://localhost:4000/blogs/admin/${id}`,
       options,
@@ -67,13 +65,13 @@ const Blog_edit_page = () => {
     setEditing(false);
     const error_array = submit_edits.data.errors;
     if (error_array) {
-      return error_array;
+      setErrorResponse(error_array);
     }
   };
 
-  const check_published = () => {
-    return blogPublished ? true : false;
-  };
+  // const check_published = () => {
+  //   return blogPublished ? true : false;
+  // };
 
   if (deleted) {
     return <Redirect route={"/blogs"} />;
@@ -94,9 +92,13 @@ const Blog_edit_page = () => {
         </div>
       )}
       <Button
-        text={"Edit"}
-        on_click={(blog) => {
-          edit_blog(blog);
+        text={
+          <div>
+            {!editing && <div>Edit</div>}
+            {editing && <div>Cancel</div>}
+          </div>
+        }
+        on_click={() => {
           setEditing(!editing);
         }}
       />
@@ -134,8 +136,8 @@ const Blog_edit_page = () => {
           <Button
             text={
               <div>
-                {!check_published() && <div>Publish</div>}
-                {check_published() && <div>Unpublish</div>}
+                {!blogPublished && <div>Publish</div>}
+                {blogPublished && <div>Unpublish</div>}
               </div>
             }
             on_click={(e) => {
