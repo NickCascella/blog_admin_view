@@ -45,7 +45,7 @@ const Blogs_page = () => {
 
   return (
     <div className="blogs-page">
-      <h1>List of Blogs</h1>
+      <h1 className="blogs-list-header">Blogs - Admin preview</h1>
       <div className="blogs-list">
         {/* <Link to={"/blogs/create"}>
         <Button text={"Create blog +"} />

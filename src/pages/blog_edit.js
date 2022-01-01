@@ -11,8 +11,10 @@ import {
   create_timestamp,
   get_blog,
   delete_blog,
-  check_published,
+  render_errors,
 } from "../helper_functions/helper_functions";
+import Label from "../components/label";
+import Textarea from "../components/textarea";
 
 const Blog_edit_page = () => {
   const { id } = useParams();
@@ -56,7 +58,7 @@ const Blog_edit_page = () => {
         blog_published: blogPublished,
       },
     };
-    console.log(blogPublished);
+    console.log(options);
     const submit_edits = await axios.put(
       `http://localhost:4000/blogs/admin/${id}`,
       options,
@@ -66,12 +68,10 @@ const Blog_edit_page = () => {
     const error_array = submit_edits.data.errors;
     if (error_array) {
       setErrorResponse(error_array);
+    } else {
+      setErrorResponse(null);
     }
   };
-
-  // const check_published = () => {
-  //   return blogPublished ? true : false;
-  // };
 
   if (deleted) {
     return <Redirect route={"/blogs"} />;
@@ -82,34 +82,22 @@ const Blog_edit_page = () => {
   }
 
   return (
-    <div>
+    <div className="blog-edit-page">
       {!editing && (
-        <div>
-          <h1>{blog.title}</h1>
-          <div>{blog.body}</div>
-          <div>{blog.description}</div>
-          <div>{blog.edited_date} </div>
+        <div className="blog">
+          <h1 className="blog-title">{blog.title}</h1>
+          <div className="blog-description">{blog.description}</div>
+
+          <div className="blog-body">{blog.body}</div>
+          <div className="blog-description">
+            {blog.created_date && blog.created_date}
+          </div>
+          <div className="blog-edited-date">{blog.edited_date} </div>
         </div>
       )}
-      {blog.author.username === user_context.user && (
-        <Button
-          text={
-            <div>
-              {!editing && <div>Edit</div>}
-              {editing && <div>Cancel</div>}
-            </div>
-          }
-          on_click={() => {
-            setEditing(!editing);
-          }}
-        />
-      )}
-      {blog.author.username !== user_context.user && (
-        <div>This blog is only editable by its author {user_context.user}</div>
-      )}
-
       {editing && (
-        <div>
+        <div className="editing-form">
+          <Label label={"Blog title"} />
           <Input
             type={"text"}
             on_change={(e) => {
@@ -117,38 +105,58 @@ const Blog_edit_page = () => {
             }}
             value={blogTitle}
           />
-          <Input
-            type={"text"}
-            value={blogTitle}
-            on_change={(e) => {
-              changeInputValue(e.target.value, setBlogBody);
-            }}
-            value={blogBody}
+          <Label label={"Blog description"} />
+          <Textarea
+            setState={setBlogDescription}
+            state={blogDescription}
+            maxRowsStart={10}
           />
-          <Input
-            type={"text"}
-            on_change={(e) => {
-              changeInputValue(e.target.value, setBlogDescription);
-            }}
-            value={blogDescription}
+          <Label label={"Blog content"} />
+          <Textarea
+            setState={setBlogBody}
+            state={blogBody}
+            minRowsStart={9}
+            maxRowsStart={20}
           />
+          <Label
+            label={
+              <span>
+                {!blogPublished && (
+                  <span>
+                    Your blog is currently <b>unpublished</b>. Meaning it will
+                    not be viewable by standard users, but will be saved here in
+                    the admin portal where you can continue to edit and then
+                    republish it to general users when you see fit.
+                  </span>
+                )}
+                {blogPublished && (
+                  <span>
+                    Yout blog is currently <b>published</b>. Meaning it will be
+                    viewable and availible for comment by general users. You do
+                    not need to unpublish a blog to make edits.
+                  </span>
+                )}
+              </span>
+            }
+          />
+          <Button
+            text={
+              <span>
+                {!blogPublished && <span>Publish</span>}
+                {blogPublished && <span>Unpublish</span>}
+              </span>
+            }
+            on_click={(e) => {
+              e.preventDefault();
+              setBlogPublished(!blogPublished);
+            }}
+          />
+
           <Button
             text={"Submit changes"}
             on_click={(e) => {
               e.preventDefault();
               submit_edits();
-            }}
-          />
-          <Button
-            text={
-              <div>
-                {!blogPublished && <div>Publish</div>}
-                {blogPublished && <div>Unpublish</div>}
-              </div>
-            }
-            on_click={(e) => {
-              e.preventDefault();
-              setBlogPublished(!blogPublished);
             }}
           />
           <Button
@@ -160,13 +168,24 @@ const Blog_edit_page = () => {
           />
         </div>
       )}
+      {blog.author.username && (
+        <Button
+          text={
+            <div>
+              {!editing && <div>Edit</div>}
+              {editing && <div>Cancel editing</div>}
+            </div>
+          }
+          on_click={() => {
+            setEditing(!editing);
+          }}
+        />
+      )}
+      {/* {blog.author.username !== user_context.user && (
+        <div>This blog is only editable by its author {user_context.user}</div>
+      )} */}
 
-      <div>
-        {errorResponse &&
-          errorResponse.map((error) => {
-            return <div key={error.msg}>{error.msg}</div>;
-          })}
-      </div>
+      <div>{errorResponse && render_errors(errorResponse)}</div>
     </div>
   );
 };

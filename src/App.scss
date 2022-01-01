@@ -1,6 +1,9 @@
 $background-primary: rgb(114, 202, 243);
+$background-primary: linear-gradient(to left, #6c7cad, #5561dd);
 $background-secondary: rgb(82, 139, 165);
+$background-secondary: rgb(27, 27, 56);
 $background-tertiary: rgb(63, 63, 63);
+$background-tertiary: rgb(27, 27, 56);
 $font-primary: white;
 
 html {
@@ -20,6 +23,7 @@ html {
   border-radius: 8px;
   border: none;
   transition: 0.4s;
+  font-size: 18px;
   &:hover {
     cursor: pointer;
     opacity: 0.7;
@@ -27,73 +31,97 @@ html {
 }
 
 .input-component {
-  background: $background-primary;
+  background: $background-secondary;
   border: none;
-  border-radius: 3px;
-  max-width: 200px;
-  padding: 3px;
+  border-radius: 5px;
+  max-width: 250px;
+  padding: 6px;
   font-size: 16px;
   outline: none;
+  color: $font-primary;
 }
 
 .label-component {
   max-width: max-content;
 }
 
+.textarea-component {
+  background: $background-secondary;
+  color: $font-primary;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  resize: none;
+  font-size: 20px;
+  line-height: 24px;
+  overflow: auto;
+  height: auto;
+  max-width: 400px;
+  padding: 8px;
+}
+
 .rendered-errors {
+  margin-top: 20px;
+
   .rendered-error-header {
     font-size: 16px;
     text-decoration: underline;
   }
   .rendered-errors-list {
-    padding-left: 20px;
+    * {
+      margin-top: 10px;
+    }
   }
 }
 
 .App {
   width: 100%;
   height: 100vh;
-  background-color: $background-primary;
+  background: $background-primary;
   display: flex;
   align-items: center;
   flex-direction: column;
   color: $font-primary;
   box-sizing: border-box;
-  //   padding: 10px;
   overflow-y: auto;
   nav {
     width: 100%;
     background-color: $background-secondary;
+    display: flex;
+    justify-content: center;
     .inner-nav {
-      max-width: 700px;
-      display: flex;
-      justify-content: space-around;
-      margin-left: auto;
+      max-width: 1400px;
       width: 100%;
-
-      .nav-link {
-        color: $font-primary;
-        text-decoration: none;
-        margin: 10px 15px;
-        font-size: 20px;
-        display: inline-block;
-        position: relative;
-        &::after {
-          content: "";
-          position: absolute;
-          width: 100%;
-          transform: scaleX(0);
-          height: 2px;
-          margin-top: 2px;
-          bottom: 0;
-          left: 0;
-          background-color: $font-primary;
-          transform-origin: bottom right;
-          transition: transform 0.25s ease-out;
-        }
-        &:hover::after {
-          transform: scaleX(1);
-          transform-origin: bottom left;
+      .nav-links {
+        max-width: 700px;
+        display: flex;
+        justify-content: space-around;
+        margin-left: auto;
+        width: 100%;
+        .nav-link {
+          color: $font-primary;
+          text-decoration: none;
+          margin: 10px 15px;
+          font-size: 20px;
+          display: inline-block;
+          position: relative;
+          &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            margin-top: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: $font-primary;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+          }
+          &:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+          }
         }
       }
     }
@@ -101,7 +129,6 @@ html {
 
   .login-page {
     margin: auto;
-    background-color: $background-secondary;
     max-width: 400px;
     display: flex;
     flex-direction: column;
@@ -112,24 +139,21 @@ html {
       margin-top: 10px;
     }
     form {
-      background-color: $background-secondary;
-      max-width: 400px;
-      width: min-content;
+      width: 100%;
+      width: max-content;
       display: flex;
       flex-direction: column;
-      margin: 0 auto;
-      padding: 20px;
-      border-radius: 7px;
       font-size: 20px;
-      input[type="text"],
-      label {
-        margin-top: 10px;
-      }
-      button {
-        margin-top: 25px;
+
+      .label-component {
+        margin-top: 20px;
       }
     }
+    button {
+      margin: 40px auto;
+    }
   }
+
   .blogs-page {
     max-width: 1400px;
     margin-top: 20px;
@@ -137,11 +161,17 @@ html {
     flex-direction: column;
     align-items: center;
     width: 100%;
+
+    .blogs-list-header {
+      margin: 0 30px;
+      word-wrap: break-word;
+    }
     .blogs-list {
       width: 100%;
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
+
       .blog-preview {
         margin: 20px 30px;
         background: $background-secondary;
@@ -152,8 +182,10 @@ html {
         align-items: center;
         height: max-content;
         transition: 0.5s;
+
         &:hover {
           transform: scale(1.1);
+          box-shadow: 0px 0px 14px #000000;
         }
         .blog-link {
           text-decoration: none;
@@ -169,7 +201,41 @@ html {
         }
         .blog-description {
           margin-top: 20px;
+          word-break: break-word;
         }
+      }
+    }
+  }
+
+  .blog-edit-page,
+  .blog-create-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    .button-component {
+      margin-top: 20px;
+    }
+    .blog {
+      display: flex;
+      flex-direction: column;
+      max-width: 500px;
+      * {
+        margin-top: 20px;
+        word-break: break-word;
+      }
+    }
+    .editing-form,
+    .create-form {
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      width: 100%;
+      * {
+        margin-top: 10px;
       }
     }
   }

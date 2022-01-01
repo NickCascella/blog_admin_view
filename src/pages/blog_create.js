@@ -2,11 +2,14 @@ import { useState, useContext, useEffect } from "react";
 import {
   create_timestamp,
   changeInputValue,
+  render_errors,
 } from "../helper_functions/helper_functions";
 import { UserContext } from "../App";
 import axios from "axios";
 import Button from "../components/button";
 import Input from "../components/input";
+import Label from "../components/label";
+import Textarea from "../components/textarea";
 import Redirect from "../components/redirect";
 
 const Blog_create_page = () => {
@@ -38,23 +41,24 @@ const Blog_create_page = () => {
         author: user_context.userId,
       },
     };
-    console.log(options);
 
     const create_blog_request = await axios.post(
       `http://localhost:4000/blogs/admin`,
       options,
       { headers }
     );
-    console.log(create_blog_request);
+
     if (create_blog_request.data.errors) {
+      console.log("errors");
       setErrorResponse(create_blog_request.data.errors);
       return;
     }
+
     setCreated(true);
-    // const error_array = create_comment.data.errors;
-    // if (error_array) {
-    //   return error_array;
-    // }
+    const error_array = create_blog_request.data.errors;
+    if (error_array) {
+      return error_array;
+    }
   };
 
   if (created) {
@@ -64,36 +68,59 @@ const Blog_create_page = () => {
   }
 
   return (
-    <div>
-      <Input
-        type={"text"}
-        placeholder={"Blog title here.."}
-        value={blogTitle}
-        on_change={(e) => {
-          changeInputValue(e.target.value, setBlogTitle);
-        }}
-      ></Input>
-      <Input
-        type={"text"}
-        placeholder={"Blog description here.."}
-        value={blogDescription}
-        on_change={(e) => {
-          changeInputValue(e.target.value, setBlogDescription);
-        }}
-      ></Input>
-      <Input
-        type={"text"}
-        placeholder={"Blog body here.."}
-        value={blogBody}
-        on_change={(e) => {
-          changeInputValue(e.target.value, setBlogBody);
-        }}
-      ></Input>
+    <div className="blog-create-page">
+      <div className="create-form">
+        <Label label={"Blog title"} />
+        <Input
+          type={"text"}
+          placeholder={"Blog title..."}
+          value={blogTitle}
+          on_change={(e) => {
+            changeInputValue(e.target.value, setBlogTitle);
+          }}
+        ></Input>
+        <Label label={"Blog description"} />
+        <Textarea
+          placeholder={"Blog description..."}
+          setState={setBlogDescription}
+          state={blogDescription}
+          maxRowsStart={10}
+        />
+        <Label label={"Blog content"} />
+        <Textarea
+          placeholder={"Blog content..."}
+          setState={setBlogBody}
+          state={blogBody}
+          minRowsStart={9}
+          maxRowsStart={20}
+        />
+        <Label
+          label={
+            <span>
+              {!blogPublished && (
+                <span>
+                  Your blog is currently set to be <b>unpublished</b>. Meaning
+                  it will not be viewable by standard users, but will be saved
+                  here in the admin portal where you can edit, then publish it
+                  to general users when you see fit.
+                </span>
+              )}
+              {blogPublished && (
+                <span>
+                  Your blog is currently set to be <b>published</b>. Meaning it
+                  will be viewable and availible for comment by general users.
+                </span>
+              )}
+            </span>
+          }
+        />
+      </div>
+
       <Button
         text={
           <div>
-            {!blogPublished && <div>Publish</div>}
-            {blogPublished && <div>Unpublish</div>}
+            {!blogPublished && <span>Publish</span>}
+            {blogPublished && <span>Do not publish</span>}
           </div>
         }
         on_click={() => {
@@ -106,10 +133,7 @@ const Blog_create_page = () => {
         }}
         text={"Create Blog"}
       />
-      {errorResponse &&
-        errorResponse.map((error) => {
-          return error.msg;
-        })}
+      {errorResponse && render_errors(errorResponse)}
     </div>
   );
 };

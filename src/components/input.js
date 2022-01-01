@@ -1,4 +1,4 @@
-const Input = ({ type, placeholder, value, on_change }) => {
+const Input = ({ type, placeholder, value, on_change, min, max }) => {
   return (
     <input
       className="input-component"
@@ -6,6 +6,8 @@ const Input = ({ type, placeholder, value, on_change }) => {
       placeholder={placeholder}
       onChange={on_change}
       value={value}
+      min={min}
+      max={max}
     ></input>
   );
 };

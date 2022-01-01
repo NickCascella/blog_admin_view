@@ -34,21 +34,22 @@ function App() {
           {token && (
             <nav>
               <div className="inner-nav">
-                <Custom_Link
-                  text={"Create"}
-                  route={"/blogs/create"}
-                ></Custom_Link>
-
-                <Custom_Link text={"Blogs"} route={"/blogs"}></Custom_Link>
-                <Custom_Link
-                  text={"Logout"}
-                  route={"/login"}
-                  on_click={() => {
-                    setToken(null);
-                    setUser(null);
-                    setUserId(null);
-                  }}
-                ></Custom_Link>
+                <div className="nav-links">
+                  <Custom_Link
+                    text={"Create"}
+                    route={"/blogs/create"}
+                  ></Custom_Link>
+                  <Custom_Link text={"Blogs"} route={"/blogs"}></Custom_Link>
+                  <Custom_Link
+                    text={"Logout"}
+                    route={"/login"}
+                    on_click={() => {
+                      setToken(null);
+                      setUser(null);
+                      setUserId(null);
+                    }}
+                  ></Custom_Link>
+                </div>
               </div>
             </nav>
           )}

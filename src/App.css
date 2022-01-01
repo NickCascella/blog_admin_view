@@ -8,7 +8,7 @@ html * {
 }
 
 .button-component {
-  background: #3f3f3f;
+  background: #1b1b38;
   color: white;
   width: -webkit-max-content;
   width: -moz-max-content;
@@ -19,6 +19,7 @@ html * {
   border: none;
   -webkit-transition: 0.4s;
   transition: 0.4s;
+  font-size: 18px;
 }
 
 .button-component:hover {
@@ -27,13 +28,14 @@ html * {
 }
 
 .input-component {
-  background: #72caf3;
+  background: #1b1b38;
   border: none;
-  border-radius: 3px;
-  max-width: 200px;
-  padding: 3px;
+  border-radius: 5px;
+  max-width: 250px;
+  padding: 6px;
   font-size: 16px;
   outline: none;
+  color: white;
 }
 
 .label-component {
@@ -42,19 +44,40 @@ html * {
   max-width: max-content;
 }
 
+.textarea-component {
+  background: #1b1b38;
+  color: white;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  resize: none;
+  font-size: 20px;
+  line-height: 24px;
+  overflow: auto;
+  height: auto;
+  max-width: 400px;
+  padding: 8px;
+}
+
+.rendered-errors {
+  margin-top: 20px;
+}
+
 .rendered-errors .rendered-error-header {
   font-size: 16px;
   text-decoration: underline;
 }
 
-.rendered-errors .rendered-errors-list {
-  padding-left: 20px;
+.rendered-errors .rendered-errors-list * {
+  margin-top: 10px;
 }
 
 .App {
   width: 100%;
   height: 100vh;
-  background-color: #72caf3;
+  background: -webkit-gradient(linear, right top, left top, from(#6c7cad), to(#5561dd));
+  background: linear-gradient(to left, #6c7cad, #5561dd);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -73,10 +96,21 @@ html * {
 
 .App nav {
   width: 100%;
-  background-color: #528ba5;
+  background-color: #1b1b38;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .App nav .inner-nav {
+  max-width: 1400px;
+  width: 100%;
+}
+
+.App nav .inner-nav .nav-links {
   max-width: 700px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -87,7 +121,7 @@ html * {
   width: 100%;
 }
 
-.App nav .inner-nav .nav-link {
+.App nav .inner-nav .nav-links .nav-link {
   color: white;
   text-decoration: none;
   margin: 10px 15px;
@@ -96,7 +130,7 @@ html * {
   position: relative;
 }
 
-.App nav .inner-nav .nav-link::after {
+.App nav .inner-nav .nav-links .nav-link::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -115,7 +149,7 @@ html * {
   transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
 }
 
-.App nav .inner-nav .nav-link:hover::after {
+.App nav .inner-nav .nav-links .nav-link:hover::after {
   -webkit-transform: scaleX(1);
           transform: scaleX(1);
   -webkit-transform-origin: bottom left;
@@ -124,7 +158,6 @@ html * {
 
 .App .login-page {
   margin: auto;
-  background-color: #528ba5;
   max-width: 400px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -142,11 +175,10 @@ html * {
 }
 
 .App .login-page form {
-  background-color: #528ba5;
-  max-width: 400px;
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
+  width: 100%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -154,19 +186,15 @@ html * {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin: 0 auto;
-  padding: 20px;
-  border-radius: 7px;
   font-size: 20px;
 }
 
-.App .login-page form input[type="text"],
-.App .login-page form label {
-  margin-top: 10px;
+.App .login-page form .label-component {
+  margin-top: 20px;
 }
 
-.App .login-page form button {
-  margin-top: 25px;
+.App .login-page button {
+  margin: 40px auto;
 }
 
 .App .blogs-page {
@@ -185,6 +213,11 @@ html * {
   width: 100%;
 }
 
+.App .blogs-page .blogs-list-header {
+  margin: 0 30px;
+  word-wrap: break-word;
+}
+
 .App .blogs-page .blogs-list {
   width: 100%;
   display: -webkit-box;
@@ -199,7 +232,7 @@ html * {
 
 .App .blogs-page .blogs-list .blog-preview {
   margin: 20px 30px;
-  background: #528ba5;
+  background: #1b1b38;
   padding: 15px;
   border-radius: 10px;
   max-width: 200px;
@@ -219,6 +252,8 @@ html * {
 .App .blogs-page .blogs-list .blog-preview:hover {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
+  -webkit-box-shadow: 0px 0px 14px #000000;
+          box-shadow: 0px 0px 14px #000000;
 }
 
 .App .blogs-page .blogs-list .blog-preview .blog-link {
@@ -236,5 +271,69 @@ html * {
 
 .App .blogs-page .blogs-list .blog-preview .blog-description {
   margin-top: 20px;
+  word-break: break-word;
+}
+
+.App .blog-edit-page,
+.App .blog-create-page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+}
+
+.App .blog-edit-page .button-component,
+.App .blog-create-page .button-component {
+  margin-top: 20px;
+}
+
+.App .blog-edit-page .blog,
+.App .blog-create-page .blog {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-width: 500px;
+}
+
+.App .blog-edit-page .blog *,
+.App .blog-create-page .blog * {
+  margin-top: 20px;
+  word-break: break-word;
+}
+
+.App .blog-edit-page .editing-form,
+.App .blog-edit-page .create-form,
+.App .blog-create-page .editing-form,
+.App .blog-create-page .create-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+}
+
+.App .blog-edit-page .editing-form *,
+.App .blog-edit-page .create-form *,
+.App .blog-create-page .editing-form *,
+.App .blog-create-page .create-form * {
+  margin-top: 10px;
 }
 /*# sourceMappingURL=App.css.map */

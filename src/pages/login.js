@@ -78,14 +78,14 @@ const Login_page = () => {
             setAdminCode(e.target.value);
           }}
         />
-        <Button
-          text={"Login"}
-          on_click={(e) => {
-            e.preventDefault();
-            login();
-          }}
-        />
       </form>
+      <Button
+        text={"Login"}
+        on_click={(e) => {
+          e.preventDefault();
+          login();
+        }}
+      />
       {errorResponse && render_errors(errorResponse)}
     </div>
   );

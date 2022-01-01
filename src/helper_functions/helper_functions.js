@@ -81,7 +81,7 @@ const render_errors = (error_array) => {
   return (
     <div className="rendered-errors">
       <div className="rendered-error-header">
-        Please note the following issues with your request
+        Unable to complete request. Please note the following issues.
       </div>
       <ul className="rendered-errors-list">
         {error_array.map((error) => {
