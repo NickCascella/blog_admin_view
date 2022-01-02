@@ -10,11 +10,13 @@ import Button from "../components/button";
 const Blogs_page = () => {
   const user_context = useContext(UserContext);
   const token = user_context.token;
+  const setToken = user_context.setToken;
+  const refreshToken = user_context.refreshToken;
   const blogs = user_context.blogs;
   const setBlogs = user_context.setBlogs;
 
   useEffect(() => {
-    get_blogs(token, setBlogs);
+    get_blogs(token, setBlogs, refreshToken, setToken);
   }, []);
 
   const render_blogs = () => {

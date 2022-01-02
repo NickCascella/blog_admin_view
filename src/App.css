@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 html {
   overflow-x: hidden;
 }
@@ -92,6 +93,7 @@ html * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow-y: auto;
+  font-family: "Roboto", sans-serif;
 }
 
 .App nav {
@@ -176,9 +178,6 @@ html * {
 
 .App .login-page form {
   width: 100%;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -191,6 +190,10 @@ html * {
 
 .App .login-page form .label-component {
   margin-top: 20px;
+}
+
+.App .login-page form .input-component {
+  width: 150px;
 }
 
 .App .login-page button {
@@ -286,6 +289,8 @@ html * {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  font-size: 20px;
+  font-weight: bold;
   width: 100%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -335,5 +340,11 @@ html * {
 .App .blog-create-page .editing-form *,
 .App .blog-create-page .create-form * {
   margin-top: 10px;
+}
+
+.App .blog-edit-page .published-notice,
+.App .blog-create-page .published-notice {
+  font-weight: normal;
+  font-size: 16px;
 }
 /*# sourceMappingURL=App.css.map */

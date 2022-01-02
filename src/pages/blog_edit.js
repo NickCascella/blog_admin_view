@@ -20,6 +20,7 @@ const Blog_edit_page = () => {
   const { id } = useParams();
   const user_context = useContext(UserContext);
   const token = user_context.token;
+  const setToken = user_context.setToken;
   const [blog, setBlog] = useState("");
   const [errorResponse, setErrorResponse] = useState(null);
   const [editing, setEditing] = useState(false);
@@ -33,7 +34,7 @@ const Blog_edit_page = () => {
     setBlogTitle(blog.title);
     setBlogBody(blog.body);
     setBlogDescription(blog.description);
-    get_blog(token, id, setBlog, setBlogPublished);
+    get_blog(token, id, setBlog, setBlogPublished, setToken);
   }, [editing]);
 
   const submit_edits = async () => {
@@ -120,7 +121,7 @@ const Blog_edit_page = () => {
           />
           <Label
             label={
-              <span>
+              <span className="published-notice">
                 {!blogPublished && (
                   <span>
                     Your blog is currently <b>unpublished</b>. Meaning it will

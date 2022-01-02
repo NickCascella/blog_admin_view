@@ -37,7 +37,7 @@ const Login_page = () => {
     setLoginUser("");
     setPassword("");
     setAdminCode("");
-    console.log(get_token);
+
     if (get_token.data.errors) {
       setErrorResponse(get_token.data.errors);
       return;
@@ -45,7 +45,7 @@ const Login_page = () => {
     setErrorResponse(null);
     user_context.setUser(get_token.data.user);
     user_context.setUserId(get_token.data.userId);
-    user_context.setToken(get_token.data.token);
+    user_context.setToken(get_token.data.accessToken);
   };
 
   if (user_context.token) {
@@ -78,14 +78,15 @@ const Login_page = () => {
             setAdminCode(e.target.value);
           }}
         />
+        <Button
+          text={"Login"}
+          on_click={(e) => {
+            e.preventDefault();
+            login();
+          }}
+        />
       </form>
-      <Button
-        text={"Login"}
-        on_click={(e) => {
-          e.preventDefault();
-          login();
-        }}
-      />
+
       {errorResponse && render_errors(errorResponse)}
     </div>
   );

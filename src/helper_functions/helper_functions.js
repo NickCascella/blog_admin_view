@@ -23,21 +23,33 @@ const logout = (setToken, setUser, setUserId, setBlogs) => {
 
 //GET BLOGS
 
-const get_blogs = async (token, setBlogs) => {
+const get_blogs = async (token, setBlogs, refreshToken, setToken) => {
   const options = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+      Auth_refresh: refreshToken,
     },
     mode: "cors",
   };
-  const get_all_blogs = await axios.get("http://localhost:4000/blogs", options);
-  const response = get_all_blogs;
-  setBlogs(response.data);
+
+  const get_all_blogs = async () => {
+    try {
+      let response = await axios.get("http://localhost:4000/blogs", options);
+      // const response = get_all_blogs();
+      setBlogs(response.data);
+      return;
+    } catch (err) {
+      setToken(null);
+
+      return err;
+    }
+  };
+  get_all_blogs();
 };
 
-const get_blog = async (token, id, setBlog, setBlogPublished) => {
+const get_blog = async (token, id, setBlog, setBlogPublished, setToken) => {
   const options = {
     method: "GET",
     headers: {
@@ -46,13 +58,23 @@ const get_blog = async (token, id, setBlog, setBlogPublished) => {
     },
     mode: "cors",
   };
-  const get_blog_request = await axios.get(
-    `http://localhost:4000/blogs/${id}`,
-    options
-  );
-  const response = get_blog_request;
-  setBlog(response.data);
-  setBlogPublished(response.data.published);
+
+  const get_blog_request = async () => {
+    try {
+      let response = await axios.get(
+        `http://localhost:4000/blogs/${id}`,
+        options
+      );
+      setBlog(response.data);
+      setBlogPublished(response.data.published);
+      return;
+    } catch (err) {
+      setToken(null);
+
+      return err;
+    }
+  };
+  get_blog_request();
 };
 
 const delete_blog = async (token, id, setDeleted) => {

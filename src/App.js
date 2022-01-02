@@ -12,6 +12,7 @@ const UserContext = React.createContext();
 
 function App() {
   const [token, setToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(null);
@@ -22,6 +23,8 @@ function App() {
         value={{
           token: token,
           setToken: setToken,
+          refreshToken: refreshToken,
+          setRefreshToken,
           user: user,
           setUser: setUser,
           userId: userId,

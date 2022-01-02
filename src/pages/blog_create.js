@@ -96,7 +96,7 @@ const Blog_create_page = () => {
         />
         <Label
           label={
-            <span>
+            <span className="published-notice">
               {!blogPublished && (
                 <span>
                   Your blog is currently set to be <b>unpublished</b>. Meaning
