@@ -1,10 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-$background-primary: rgb(114, 202, 243);
 $background-primary: linear-gradient(to left, #6c7cad, #5561dd);
-$background-secondary: rgb(82, 139, 165);
 $background-secondary: rgb(27, 27, 56);
-$background-tertiary: rgb(63, 63, 63);
 $background-tertiary: rgb(27, 27, 56);
 $font-primary: white;
 
@@ -232,6 +229,14 @@ html {
       * {
         margin-top: 20px;
         word-break: break-word;
+      }
+      .blog-published-status {
+        .published {
+          color: rgb(73, 194, 73);
+        }
+        .unpublished {
+          color: yellow;
+        }
       }
     }
     .editing-form,

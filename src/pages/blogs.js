@@ -28,9 +28,7 @@ const Blogs_page = () => {
             <h1 className="blog-title">{blog.title}</h1>
             <h2 className="blog-author-container">
               By{" "}
-              <span className="blog-author-name">
-                {blog.author && blog.author.username}
-              </span>
+              <span className="blog-author-name">{blog.author.username}</span>
             </h2>
             <p className="blog-description">{blog.description}</p>
           </Link>
@@ -48,12 +46,7 @@ const Blogs_page = () => {
   return (
     <div className="blogs-page">
       <h1 className="blogs-list-header">Blogs - Admin preview</h1>
-      <div className="blogs-list">
-        {/* <Link to={"/blogs/create"}>
-        <Button text={"Create blog +"} />
-      </Link> */}
-        {render_blogs()}
-      </div>
+      <div className="blogs-list">{render_blogs()}</div>
     </div>
   );
 };

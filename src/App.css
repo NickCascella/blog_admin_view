@@ -320,6 +320,16 @@ html * {
   word-break: break-word;
 }
 
+.App .blog-edit-page .blog .blog-published-status .published,
+.App .blog-create-page .blog .blog-published-status .published {
+  color: #49c249;
+}
+
+.App .blog-edit-page .blog .blog-published-status .unpublished,
+.App .blog-create-page .blog .blog-published-status .unpublished {
+  color: yellow;
+}
+
 .App .blog-edit-page .editing-form,
 .App .blog-edit-page .create-form,
 .App .blog-create-page .editing-form,

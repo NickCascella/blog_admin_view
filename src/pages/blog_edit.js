@@ -59,7 +59,7 @@ const Blog_edit_page = () => {
         blog_published: blogPublished,
       },
     };
-    console.log(options);
+
     const submit_edits = await axios.put(
       `http://localhost:4000/blogs/admin/${id}`,
       options,
@@ -90,10 +90,16 @@ const Blog_edit_page = () => {
           <div className="blog-description">{blog.description}</div>
 
           <div className="blog-body">{blog.body}</div>
-          <div className="blog-description">
-            {blog.created_date && blog.created_date}
-          </div>
+          <div className="blog-description">{blog.created_date}</div>
           <div className="blog-edited-date">{blog.edited_date} </div>
+          <div className="blog-published-status">
+            {blogPublished && !editing && (
+              <span className="published">Published</span>
+            )}
+            {!blogPublished && !editing && (
+              <span className="unpublished">Unpublished</span>
+            )}
+          </div>
         </div>
       )}
       {editing && (
@@ -169,6 +175,7 @@ const Blog_edit_page = () => {
           />
         </div>
       )}
+
       {blog.author.username && (
         <Button
           text={
