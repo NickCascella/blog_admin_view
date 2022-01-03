@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import {
   create_timestamp,
   changeInputValue,
@@ -49,7 +49,6 @@ const Blog_create_page = () => {
     );
 
     if (create_blog_request.data.errors) {
-      console.log("errors");
       setErrorResponse(create_blog_request.data.errors);
       return;
     }

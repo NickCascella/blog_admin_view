@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../App";
 import { useParams } from "react-router-dom";
-import Loading_page from "./loading";
+import Loading_page from "../components/loading";
 import Button from "../components/button";
 import Input from "../components/input";
 import Redirect from "../components/redirect";

@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext, useEffect } from "react";
 import { UserContext } from "../App";
 import Redirect from "../components/redirect";
-import Loading_page from "./loading";
+import Loading_page from "../components/loading";
 import { Link } from "react-router-dom";
 import { get_blogs } from "../helper_functions/helper_functions";
-import Button from "../components/button";
 
 const Blogs_page = () => {
   const user_context = useContext(UserContext);
@@ -20,7 +18,6 @@ const Blogs_page = () => {
   }, []);
 
   const render_blogs = () => {
-    console.log(blogs);
     return blogs.map((blog) => {
       return (
         <div className="blog-preview" key={blog._id}>
