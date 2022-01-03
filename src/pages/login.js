@@ -33,15 +33,15 @@ const Login_page = () => {
       "http://localhost:4000/auth/admin/login",
       options
     );
-
-    setLoginUser("");
-    setPassword("");
-    setAdminCode("");
-
+    console.log(get_token);
     if (get_token.data.errors) {
       setErrorResponse(get_token.data.errors);
       return;
     }
+
+    setLoginUser("");
+    setPassword("");
+    setAdminCode("");
     setErrorResponse(null);
     user_context.setUser(get_token.data.user);
     user_context.setUserId(get_token.data.userId);

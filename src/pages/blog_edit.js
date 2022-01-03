@@ -189,9 +189,6 @@ const Blog_edit_page = () => {
           }}
         />
       )}
-      {/* {blog.author.username !== user_context.user && (
-        <div>This blog is only editable by its author {user_context.user}</div>
-      )} */}
 
       <div>{errorResponse && render_errors(errorResponse)}</div>
     </div>
