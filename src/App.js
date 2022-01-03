@@ -7,30 +7,31 @@ import Blogs_page from "./pages/blogs";
 import Blog_edit_page from "./pages/blog_edit";
 import Blog_create_page from "./pages/blog_create";
 import Custom_Link from "./components/link";
+import Missing_page_404 from "./pages/404";
 
 const UserContext = React.createContext();
 
 function App() {
   const [token, setToken] = useState(null);
-  const [refreshToken, setRefreshToken] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [webAddress, setWebAddress] = useState("http://localhost:4000");
 
   return (
     <Router>
       <UserContext.Provider
         value={{
-          token: token,
-          setToken: setToken,
-          refreshToken: refreshToken,
-          setRefreshToken,
-          user: user,
-          setUser: setUser,
-          userId: userId,
-          setUserId: setUserId,
-          blogs: blogs,
-          setBlogs: setBlogs,
+          token,
+          setToken,
+          user,
+          setUser,
+          userId,
+          setUserId,
+          blogs,
+          setBlogs,
+          webAddress,
+          setWebAddress,
         }}
       >
         <div className="App">
@@ -56,7 +57,6 @@ function App() {
               </div>
             </nav>
           )}
-
           <Routes>
             <Route
               exact
@@ -67,6 +67,7 @@ function App() {
             <Route path="/blogs" element={<Blogs_page />}></Route>
             <Route path="/blogs/:id" element={<Blog_edit_page />}></Route>
             <Route path="/blogs/create" element={<Blog_create_page />}></Route>
+            <Route path="*" element={<Missing_page_404 />}></Route>
           </Routes>
         </div>
       </UserContext.Provider>

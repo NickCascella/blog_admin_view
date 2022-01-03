@@ -23,7 +23,13 @@ const logout = (setToken, setUser, setUserId, setBlogs) => {
 
 //GET BLOGS
 
-const get_blogs = async (token, setBlogs, refreshToken, setToken) => {
+const get_blogs = async (
+  token,
+  setBlogs,
+  refreshToken,
+  setToken,
+  user_context
+) => {
   const options = {
     method: "GET",
     headers: {
@@ -36,7 +42,10 @@ const get_blogs = async (token, setBlogs, refreshToken, setToken) => {
 
   const get_all_blogs = async () => {
     try {
-      let response = await axios.get("http://localhost:4000/blogs", options);
+      let response = await axios.get(
+        `${user_context.webAddress}/blogs`,
+        options
+      );
       // const response = get_all_blogs();
       setBlogs(response.data);
       return;
@@ -49,7 +58,14 @@ const get_blogs = async (token, setBlogs, refreshToken, setToken) => {
   get_all_blogs();
 };
 
-const get_blog = async (token, id, setBlog, setBlogPublished, setToken) => {
+const get_blog = async (
+  token,
+  id,
+  setBlog,
+  setBlogPublished,
+  setToken,
+  user_context
+) => {
   const options = {
     method: "GET",
     headers: {
@@ -62,7 +78,7 @@ const get_blog = async (token, id, setBlog, setBlogPublished, setToken) => {
   const get_blog_request = async () => {
     try {
       let response = await axios.get(
-        `http://localhost:4000/blogs/${id}`,
+        `${user_context.webAddress}/blogs/${id}`,
         options
       );
       setBlog(response.data);
@@ -77,7 +93,7 @@ const get_blog = async (token, id, setBlog, setBlogPublished, setToken) => {
   get_blog_request();
 };
 
-const delete_blog = async (token, id, setDeleted) => {
+const delete_blog = async (token, id, setDeleted, user_context) => {
   const options = {
     headers: {
       "Content-Type": "application/json",
@@ -89,14 +105,9 @@ const delete_blog = async (token, id, setDeleted) => {
   };
   setDeleted(true);
   const delete_blog_request = await axios.delete(
-    `http://localhost:4000/blogs/admin/${id}`,
+    `${user_context.webAddress}/blogs/admin/${id}`,
     options
   );
-
-  // const error_array = submit_edits.data.errors;
-  // if (error_array) {
-  //   return error_array;
-  // }
 };
 
 const render_errors = (error_array) => {

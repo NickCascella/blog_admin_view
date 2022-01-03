@@ -30,10 +30,10 @@ const Login_page = () => {
     };
 
     const get_token = await axios.post(
-      "http://localhost:4000/auth/admin/login",
+      `${user_context.webAddress}/auth/admin/login`,
       options
     );
-    console.log(get_token);
+
     if (get_token.data.errors) {
       setErrorResponse(get_token.data.errors);
       return;

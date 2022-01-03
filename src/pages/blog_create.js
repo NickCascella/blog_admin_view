@@ -21,6 +21,7 @@ const Blog_create_page = () => {
   const [errorResponse, setErrorResponse] = useState(null);
   const user_context = useContext(UserContext);
   const token = user_context.token;
+  const setToken = user_context.setToken;
 
   const create_blog = async () => {
     const headers = {
@@ -41,23 +42,25 @@ const Blog_create_page = () => {
         author: user_context.userId,
       },
     };
-
-    const create_blog_request = await axios.post(
-      `http://localhost:4000/blogs/admin`,
-      options,
-      { headers }
-    );
-
-    if (create_blog_request.data.errors) {
-      setErrorResponse(create_blog_request.data.errors);
-      return;
-    }
-
-    setCreated(true);
-    const error_array = create_blog_request.data.errors;
-    if (error_array) {
-      return error_array;
-    }
+    const create_blog_request = async () => {
+      try {
+        let response = await axios.post(
+          `${user_context.webAddress}/blogs/admin`,
+          options,
+          { headers }
+        );
+        if (response.data.errors) {
+          setErrorResponse(response.data.errors);
+          return;
+        }
+        setCreated(true);
+        return;
+      } catch (err) {
+        setToken(null);
+        return err;
+      }
+    };
+    create_blog_request();
   };
 
   if (created) {

@@ -34,7 +34,7 @@ const Blog_edit_page = () => {
     setBlogTitle(blog.title);
     setBlogBody(blog.body);
     setBlogDescription(blog.description);
-    get_blog(token, id, setBlog, setBlogPublished, setToken);
+    get_blog(token, id, setBlog, setBlogPublished, setToken, user_context);
   }, [editing]);
 
   const submit_edits = async () => {
@@ -60,18 +60,27 @@ const Blog_edit_page = () => {
       },
     };
 
-    const submit_edits = await axios.put(
-      `http://localhost:4000/blogs/admin/${id}`,
-      options,
-      { headers }
-    );
-    setEditing(false);
-    const error_array = submit_edits.data.errors;
-    if (error_array) {
-      setErrorResponse(error_array);
-    } else {
-      setErrorResponse(null);
-    }
+    const get_submit_changes = async () => {
+      try {
+        let response = await axios.put(
+          `${user_context.webAddress}/blogs/admin/${id}`,
+          options,
+          { headers }
+        );
+        const error_array = response.data.errors;
+        if (error_array) {
+          setErrorResponse(error_array);
+        } else {
+          setErrorResponse(null);
+        }
+        setEditing(false);
+        return;
+      } catch (err) {
+        setToken(null);
+        return err;
+      }
+    };
+    get_submit_changes();
   };
 
   if (deleted) {
@@ -79,7 +88,7 @@ const Blog_edit_page = () => {
   } else if (!token) {
     return <Redirect route={"/login"} />;
   } else if (!blog) {
-    return <Loading_page message={"Loading :("} />;
+    return <Loading_page message={"Loading"} />;
   }
 
   return (
@@ -88,7 +97,6 @@ const Blog_edit_page = () => {
         <div className="blog">
           <h1 className="blog-title">{blog.title}</h1>
           <div className="blog-description">{blog.description}</div>
-
           <div className="blog-body">{blog.body}</div>
           <div className="blog-description">{blog.created_date}</div>
           <div className="blog-edited-date">{blog.edited_date} </div>
@@ -169,7 +177,7 @@ const Blog_edit_page = () => {
           <Button
             text={"Delete"}
             on_click={async () => {
-              await delete_blog(token, id, setDeleted);
+              await delete_blog(token, id, setDeleted, user_context);
               setEditing(!editing);
             }}
           />
