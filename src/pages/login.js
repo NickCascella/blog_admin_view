@@ -14,8 +14,6 @@ const Login_page = () => {
   const user_context = useContext(UserContext);
   const [errorResponse, setErrorResponse] = useState(null);
 
-  useEffect(() => {}, [errorResponse]);
-
   const login = async () => {
     const options = {
       headers: {
